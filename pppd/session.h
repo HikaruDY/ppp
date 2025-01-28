@@ -30,7 +30,7 @@
 #ifndef PPP_SESSION_H
 #define PPP_SESSION_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

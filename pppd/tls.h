@@ -29,7 +29,7 @@
 #ifndef PPP_TLS_H
 #define PPP_TLS_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 /**
  * Structure used in verifying the peer certificate

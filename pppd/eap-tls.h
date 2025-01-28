@@ -33,7 +33,7 @@
 #ifndef PPP_EAP_TLS_H
 #define PPP_EAP_TLS_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 #include "eap.h"
 
 #include <openssl/ssl.h>

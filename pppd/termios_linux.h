@@ -9,7 +9,7 @@
 #ifndef PPP_TERMIOS_LINUX_H
 #define PPP_TERMIOS_LINUX_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 /*
  * We need to use raw TCGETS2/TCSETS2 or TCGETS/TCSETS ioctls with the BOTHER

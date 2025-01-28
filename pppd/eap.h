@@ -21,7 +21,7 @@
 #ifndef PPP_EAP_H
 #define	PPP_EAP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef	__cplusplus
 extern "C" {

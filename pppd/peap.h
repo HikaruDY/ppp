@@ -30,7 +30,7 @@
 #ifndef PPP_PEAP_H
 #define	PPP_PEAP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #define	PEAP_PHASE_1			1
 #define	PEAP_PHASE_2			2

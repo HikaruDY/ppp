@@ -1,7 +1,7 @@
 #ifndef PPP_TDB_H
 #define PPP_TDB_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 /* 
    Unix SMB/CIFS implementation.

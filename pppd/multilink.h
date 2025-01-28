@@ -27,7 +27,7 @@
 #ifndef PPP_MULTILINK_H
 #define PPP_MULTILINK_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

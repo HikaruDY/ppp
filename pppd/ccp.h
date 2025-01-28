@@ -26,7 +26,7 @@
 #ifndef PPP_CCP_H
 #define PPP_CCP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef  __cplusplus
 extern "C" {

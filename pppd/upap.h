@@ -42,7 +42,7 @@
 #ifndef PPP_UPAP_H
 #define PPP_UPAP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

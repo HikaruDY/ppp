@@ -42,7 +42,7 @@
 #ifndef PPP_FSM_H
 #define PPP_FSM_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

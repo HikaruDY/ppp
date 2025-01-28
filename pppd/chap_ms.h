@@ -31,7 +31,7 @@
 #ifndef PPP_CHAPMS_H
 #define PPP_CHAPMS_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

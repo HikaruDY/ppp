@@ -27,7 +27,7 @@
 #ifndef PPP_CHAP_NEW_H
 #define PPP_CHAP_NEW_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef  __cplusplus
 extern "C" {

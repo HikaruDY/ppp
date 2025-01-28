@@ -49,7 +49,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

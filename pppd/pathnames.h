@@ -41,7 +41,7 @@
 #ifndef PPP_PATHNAMES_H
 #define PPP_PATHNAMES_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

@@ -27,7 +27,7 @@
 #ifndef PPP_SPINLOCK_H
 #define PPP_SPINLOCK_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #include "tdb.h"
 

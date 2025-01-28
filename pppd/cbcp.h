@@ -33,7 +33,7 @@
 #ifndef PPP_CBCP_H
 #define PPP_CBCP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef  __cplusplus
 extern "C" {

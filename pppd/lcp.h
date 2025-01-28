@@ -42,7 +42,7 @@
 #ifndef PPP_LCP_H
 #define PPP_LCP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

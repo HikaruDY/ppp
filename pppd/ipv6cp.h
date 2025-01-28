@@ -37,7 +37,7 @@
 #ifndef PPP_IPV6CP_H
 #define PPP_IPV6CP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

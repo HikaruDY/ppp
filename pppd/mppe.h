@@ -26,7 +26,7 @@
 #ifndef PPP_MPPE_H
 #define PPP_MPPE_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

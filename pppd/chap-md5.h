@@ -27,7 +27,7 @@
 #ifndef PPP_CHAP_MD5_H
 #define PPP_CHAP_MD5_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 extern void chap_md5_init(void);
 

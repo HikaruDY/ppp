@@ -42,7 +42,7 @@
 #ifndef PPP_MAGIC_H
 #define PPP_MAGIC_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {

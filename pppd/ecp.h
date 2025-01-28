@@ -31,7 +31,7 @@
 #ifndef PPP_ECP_H
 #define PPP_ECP_H
 
-#include "pppdconf.h"
+#include <pppdconf.h>
 
 #ifdef __cplusplus
 extern "C" {
