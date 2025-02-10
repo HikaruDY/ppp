@@ -145,7 +145,7 @@ char	path_ipv6down[MAXPATHLEN]; /* pathname of ipv6-down script */
 
 unsigned int  maxoctets = 0;    /* default - no limit */
 session_limit_dir_t maxoctets_dir = PPP_OCTETS_DIRECTION_SUM; /* default - sum of traffic */
-int maxoctets_timeout = 1;   /* default 1 second */ 
+int maxoctets_timeout = 1;   /* default 1 second */
 
 
 extern struct option auth_options[];
@@ -412,6 +412,47 @@ struct option general_options[] = {
 #define IMPLEMENTATION ""
 #endif
 
+int GetDirFromFullPath(char* Result, int ResultSize, char* AppPath){
+	int LastDiv = -1;
+	int i ;
+	for(i = 0; i<ResultSize; i++){
+		if(AppPath[i] == 0x2F){
+			LastDiv = i;
+		}
+
+		Result[i] = AppPath[i];
+
+		if(AppPath[i] == 0x00){
+			break;
+		}
+
+		if(i == (ResultSize-1)){
+			Result[i] = 0x00; //Force terminate by overflow
+			break;
+		}
+	}
+
+	if(LastDiv != -1){
+		Result[LastDiv] = 0x00;
+	} else {
+		return -1;
+	}
+
+	return i;
+}
+
+int GetAppDir(char* Result, int ResultSize){
+	int R = -1;
+	if ((R = readlink ("/proc/self/exe", Result, ResultSize)) != -1){
+		Result[R] = 0x00;
+		R = GetDirFromFullPath(Result, ResultSize, Result);
+	} else {
+		return -1;
+	}
+	return R;
+}
+
+
 int
 ppp_get_max_idle_time()
 {
@@ -457,7 +498,7 @@ debug_on()
 }
 
 int
-ppp_get_path(ppp_path_t type, char *buf, size_t bufsz)
+ppp_get_path_fixed(ppp_path_t type, char *buf, size_t bufsz)
 {
     const char *path;
 
@@ -484,30 +525,41 @@ ppp_get_path(ppp_path_t type, char *buf, size_t bufsz)
 }
 
 int
+ppp_get_path(ppp_path_t type, char *buf, size_t bufsz)
+{
+	int R = 0;
+	if (buf && bufsz > 0) {
+		int AppDirLength = GetAppDir(buf, bufsz); // -32: "/../lib/pppd/" PPPD_VERSION "/"
+		if(AppDirLength != -1){
+			strlcat(buf, "/../", bufsz); //lib/pppd/" PPPD_VERSION "/"
+			switch (type) {
+				case PPP_DIR_LOG:
+					R = strlcat(buf, "logs", bufsz);
+					break;
+				case PPP_DIR_RUNTIME:
+					R = strlcat(buf, "run", bufsz);
+					break;
+				case PPP_DIR_PLUGIN:
+					R = strlcat(buf, "lib/pppd/" PPPD_VERSION, bufsz);
+					break;
+				case PPP_DIR_CONF:
+					R = strlcat(buf, "etc", bufsz);
+					break;
+			}
+			return R;
+		}
+	}
+	return ppp_get_path_fixed(type, buf, bufsz);
+}
+
+int
 ppp_get_filepath(ppp_path_t type, const char *name, char *buf, size_t bufsz)
 {
-    const char *path;
-
-    if (buf && bufsz > 0) {
-        switch (type) {
-        case PPP_DIR_LOG:
-            path = PPP_PATH_VARLOG;
-            break;
-        case PPP_DIR_RUNTIME:
-            path = PPP_PATH_VARRUN;
-            break;
-#ifdef PPP_WITH_PLUGINS
-        case PPP_DIR_PLUGIN:
-            path = PPP_PATH_PLUGIN;
-            break;
-#endif
-	case PPP_DIR_CONF:
-            path = PPP_PATH_CONFDIR;
-            break;
-        }
-        return slprintf(buf, bufsz, "%s/%s", path, name);
-    }
-    return -1;
+	if( (ppp_get_path(type, buf, bufsz)) != -1 ){
+		strlcat(buf, "/", bufsz);
+		return strlcat(buf, name, bufsz);
+	}
+	return -1;
 }
 
 bool ppp_persist()
@@ -1709,7 +1761,7 @@ setactivefilter(char **argv)
 #endif
 
 /*
- * setdomain - Set domain name to append to hostname 
+ * setdomain - Set domain name to append to hostname
  */
 static int
 setdomain(char **argv)
@@ -1785,14 +1837,10 @@ loadplugin(char **argv)
     const char *vers;
 
     if (strchr(arg, '/') == 0) {
-	const char *base = PPP_PATH_PLUGIN;
-	int l = strlen(base) + strlen(arg) + 2;
-	path = malloc(l);
-	if (path == 0)
-	    novm("plugin file path");
-	strlcpy(path, base, l);
-	strlcat(path, "/", l);
-	strlcat(path, arg, l);
+	const int l = 4096;
+	char APPDIR[l];
+	ppp_get_filepath(PPP_DIR_PLUGIN, arg, APPDIR, l);
+	path = APPDIR;
     }
     handle = dlopen(path, RTLD_GLOBAL | RTLD_NOW);
     if (handle == 0) {
